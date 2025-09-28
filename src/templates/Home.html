@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="../Static/styles.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="../App.vue" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Turbo Umbrella</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Sobre Nós</h2>
+            <p>Turbo Umbrella é a sua solução para todas as suas necessidades de guarda-chuva.</p>
+        </section>
+    </main>
+    <section class="buttons">
+        <button @click="goto('Login')">Login</button>
+        <button @click="goto('Register')">Registrar</button>
+    </section>
+    <footer>
+        <p>&copy; 2025 Turbo Umbrella</p>
+    </footer>
+</body>
+</html>
