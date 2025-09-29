@@ -1,20 +1,20 @@
 <template>
-    <div class="h-screen w-screen bg-black flex itmes center justify-center">
+    <div class="h-screen w-screen bg-black flex items-center justify-center">
         <div class="bg-neutral-900 p-8 rounded-lg shadow-lg w-96">
-            <form @submit.prevent="cadastrar" class="flex flex-col">
+            <form @submit.prevent="Entrar" class="flex flex-col">
             <input
             v-model="email"
             placeholder="E-mail"
-            class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+            class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
             />
             <input
             v-model="senha"
             placeholder="Senha"
-            class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+            class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
             />
             <button
             type="submit"
-            class="bg-red-600 hover:bg-red-700 text-white font-semibold p-3 rounded trasition">
+            class="bg-red-600 hover:bg-red-700 text-white font-semibold p-3 rounded transition">
                 Entrar
             </button>
         </form>
@@ -29,7 +29,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 const email = ref('')
 const senha = ref ('')
 const router = useRouter()
