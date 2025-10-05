@@ -34,7 +34,7 @@ const email = ref('')
 const senha = ref ('')
 const router = useRouter()
 
-function entrar(){
+function Entrar(){
     if(email.value && senha.value){
         router.push("/home")
     } else{

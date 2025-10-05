@@ -13,3 +13,10 @@
 <script setup>
 import {ref} from "vue"
 </script>
+<style>
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: #f8fff6;
+}
+</style>
