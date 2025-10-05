@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Turbo umbrela</h1>
     <nav>
       <router-link to="/login">Login</router-link> |
       <router-link to="/cadastro">Cadastro</router-link> |
@@ -9,14 +8,28 @@
     <router-view></router-view>
   </div>
 </template>
-
-<script setup>
-import {ref} from "vue"
+<script>
+export default {
+  name: 'App',
+};
 </script>
+
 <style>
 body {
   margin:0;
   font-family: Arial, sans-serif;
   background: #f8fff6;
+}
+nav{
+  padding: 1rem;
+  background:#ddd;
+}
+nav a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #333;
+}
+nav a.router-link-active{
+  font-weight: bold;
 }
 </style>

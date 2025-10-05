@@ -1,12 +1,8 @@
 <template>
   <div class="bg-black min-h-screen text-white">
     <div class="flex items-center justify-between px-6 py-4 bg-neutral-900">
-      <h1 class="text-red-600 text-2xl font-extrabold">Turbo-Umbrela</h1>
-      <button
-        @click="sair"
-        class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold">
-        Sair
-      </button>
+      <h1>Turbo-Umbrela</h1>
+      <button @click="sair">Sair</button>
     </div>
     <div class="px-6 py-8">
       <h2 class="text-xl font-bold mb-4">Filmes em destaque</h2>
@@ -24,8 +20,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
-import {userRouter} from "vue-router"
+import { useRouter } from "vue-router"
 
 const router = useRouter()
 

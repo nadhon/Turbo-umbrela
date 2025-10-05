@@ -10,37 +10,33 @@
         <input
         v-model="email"
         placeholder="E-mail"
-        class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
         />
         <input
         v-model="senha"
         placeholder="Senha"
-        class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
         />
         <input
         v-model="confirmarSenha"
         placeholder="Confirmar senha"
-        class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
         />
         <input
         v-model="validadeCartao"
         placeholder="Validade do cartão"
-        class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
         />
         <input
         v-model="cvv"
         placeholder="CVV"
-        class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
         />
-        <button
-          type="submit"
-          class="bg-red-600 hover:bg-red-700 text-white font-semibold p-3 rounded transition">
-          cadastrar
-        </button>
+        <button type="submit" @click="cadastrar">cadastrar</button>
       </form>
       <p class="text-neutral-400 text-sm mt-4 text-center">
         Já tem conta?
-        <a href="#" class="text-rde-500 hover:underline">Entrar</a>
+        <a href="#" class="text-red-500 hover:underline">Entrar</a>
       </p>
     </div>
   </div>
