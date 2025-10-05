@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - Playfilmes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <a class="logo" href="index.html">Play filmes</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="login.html">Início</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="cadastro-box">
+        <h1>Crie sua conta</h1>
+        <form>
+          <input type="text" placeholder="Nome completo" required />
+          <input type="email" placeholder="E-mail" required />
+		  <input type="int" placeholder="Número de telefone" required />
+          <input type="date" placeholder="Data de nascimento" required />
+          <input type="password" placeholder="Criar senha" required />
+          <input type="password" placeholder="Confirmar senha" required />
+          <input type="text" placeholder="CPF" maxlength="14" required />
+          <input type="text" placeholder="Número do cartão" maxlength="16" required />
+          <input type="text" placeholder="CVV" maxlength="3" required />
+          <button type="submit">Cadastrar</button>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 Playfilmes - Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="mobile-navbar.js"></script>
+  </body>
+</html>
