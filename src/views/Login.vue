@@ -1,28 +1,20 @@
 <template>
-    <div class="h-screen w-screen bg-black flex items-center justify-center">
-        <div class="bg-neutral-900 p-8 rounded-lg shadow-lg w-96">
-            <form @submit.prevent="Entrar" class="flex flex-col">
-                <input
-                    v-model="email"
-                    placeholder="E-mail"
-                    class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
-                />
-                <input
-                    v-model="senha"
-                    placeholder="Senha"
-                    class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
-                />
-                <button type="submit">Entrar</button>
-            </form>
-            <p class="text-neutral-400 text-sm mt-4 text-center">
-                Novo por aqui?
-                <router-link to="/cadastro" class="text-red-500 hover:underline">
-                    Cadastre-se agora
-                </router-link>
-            </p>
-        </div>
+  <main>
+    <div class="login">
+      <form @submit.prevent="Entrar">
+        <h1>Login</h1>
+        <input v-model="email" placeholder="E-mail" />
+        <input v-model="senha" placeholder="Senha" />
+        <button type="submit">Entrar</button>
+      </form>
+      <p class="links">
+        Novo por aqui?
+        <router-link to="/cadastro">Cadastre-se agora</router-link>
+      </p>
     </div>
+  </main>
 </template>
+
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'

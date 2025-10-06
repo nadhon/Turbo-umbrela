@@ -1,48 +1,47 @@
 <template>
-  <div class="h-screen w-screen bg-black flex itmes center justify-center">
-    <div class="bg-neutral-900 p-8 rounded-lg shadow-lg w-96">
-      <form @submit.prevent="cadastrar" class="flex flex-col">
+  <main>
+    <div class="cadastro-box">
+      <form @submit.prevent="cadastrar">
+        <h1>Cadastro</h1>
         <input
-        v-model="nome"
-        placeholder="Nome completo"
-        class="bg-neutral-800 text-white p3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+          v-model="nome"
+          placeholder="Nome completo"
         />
         <input
-        v-model="email"
-        placeholder="E-mail"
-        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+          v-model="email"
+          placeholder="E-mail"
         />
         <input
-        v-model="senha"
-        placeholder="Senha"
-        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+          v-model="senha"
+          placeholder="Senha"
+          type="password"
         />
         <input
-        v-model="confirmarSenha"
-        placeholder="Confirmar senha"
-        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+          v-model="confirmarSenha"
+          placeholder="Confirmar senha"
+          type="password"
         />
         <input
-        v-model="validadeCartao"
-        placeholder="Validade do cartão"
-        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+          v-model="validadeCartao"
+          placeholder="Validade do cartão"
         />
         <input
-        v-model="cvv"
-        placeholder="CVV"
-        class="bg-neutral-800 text-white p-3 mb-3 rounded focus:ring-2 focus:ring-red-600"
+          v-model="cvv"
+          placeholder="CVV"
         />
-        <button type="submit" @click="cadastrar">cadastrar</button>
+        <button type="submit">Cadastrar</button>
       </form>
-      <p class="text-neutral-400 text-sm mt-4 text-center">
+
+      <p class="links">
         Já tem conta?
-        <a href="#" class="text-red-500 hover:underline">Entrar</a>
+        <router-link to="/login">Entrar</router-link>
       </p>
     </div>
-  </div>
+  </main>
 </template>
+
 <script setup>
-import {ref} from "vue"
+import { ref } from "vue"
 
 const nome = ref("")
 const email = ref("")
@@ -51,15 +50,15 @@ const confirmarSenha = ref("")
 const validadeCartao = ref("")
 const cvv = ref("")
 
-function cadastrar () {
+function cadastrar() {
   console.log({
-    nome,
-    email,
-    senha,
-    confirmarSenha,
-    validadeCartao,
-    cvv
+    nome: nome.value,
+    email: email.value,
+    senha: senha.value,
+    confirmarSenha: confirmarSenha.value,
+    validadeCartao: validadeCartao.value,
+    cvv: cvv.value
   })
-  alert("Cadastro enviado!(simulação)")
+  alert("Cadastro enviado! (simulação)")
 }
 </script>
