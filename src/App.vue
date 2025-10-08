@@ -13,23 +13,3 @@ export default {
   name: 'App',
 };
 </script>
-
-<style>
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  background: #f8fff6;
-}
-nav{
-  padding: 1rem;
-  background:#ddd;
-}
-nav a {
-  margin-right: 1rem;
-  text-decoration: none;
-  color: #333;
-}
-nav a.router-link-active{
-  font-weight: bold;
-}
-</style>
