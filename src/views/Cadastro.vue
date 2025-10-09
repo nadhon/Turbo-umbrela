@@ -22,6 +22,10 @@
           type="password"
         />
         <input
+          v-model="numeroCartao"
+          placeholder="Número do cartão"
+        />
+        <input
           v-model="validadeCartao"
           placeholder="Validade do cartão"
         />
@@ -42,6 +46,7 @@
 
 <script setup>
 import { ref } from "vue"
+import { useRouter } from "vue-router"
 
 const nome = ref("")
 const email = ref("")
@@ -49,16 +54,28 @@ const senha = ref("")
 const confirmarSenha = ref("")
 const validadeCartao = ref("")
 const cvv = ref("")
+const router = useRouter()
 
 function cadastrar() {
-  console.log({
+  if(senha.value !== confirmarSenha.value){
+    alert("As senhas não coincidem!")
+    return
+  } else if(!nome.value || !email.value || !senha.value || !confirmarSenha.value || !validadeCartao.value || !cvv.value){
+    alert("Por favor, preencha todos os campos!")
+    return
+  }
+  const novousuario = {
     nome: nome.value,
     email: email.value,
     senha: senha.value,
     confirmarSenha: confirmarSenha.value,
     validadeCartao: validadeCartao.value,
     cvv: cvv.value
-  })
-  alert("Cadastro enviado! (simulação)")
+  }
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+  usuarios.push(novousuario)
+  localStorage.setItem('usuarios', JSON.stringify(usuarios))
+
+  router.push("/planos")
 }
 </script>

@@ -37,17 +37,17 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
+const filmes = ref([])
 
-const filmes = [
-  { id: 1, titulo: "Filme 1", img: "https://via.placeholder.com/150" },
-  { id: 2, titulo: "Filme 2", img: "https://via.placeholder.com/150" },
-  { id: 3, titulo: "Filme 3", img: "https://via.placeholder.com/150" },
-]
+onMounted(() => {
+  filmes.value = JSON.parse(localStorage.getItem("filmes")) || []
+})
 
-function sair() {
-  router.push("/login")
+function sair(index) {
+  router.push(`/login`)
 }
 </script>

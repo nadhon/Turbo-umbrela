@@ -23,10 +23,13 @@ const senha = ref('')
 const router = useRouter()
 
 function Entrar(){
-    if(email.value && senha.value){
-        router.push("/home")
-    } else{
-        alert("Usuário não encontrado!")
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+    const usuario = usuarios.find(u => u.email === email.value && u.senha === senha.value)
+    if(usuario){
+      localStorage.setItem('usuarioLogado', JSON.stringify(usuario))
+      router.push('/home')
+    } else {
+      alert('E-mail ou senha incorretos!') 
     }
 }
 </script>
