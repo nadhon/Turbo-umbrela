@@ -29,7 +29,7 @@ function Entrar(){
       localStorage.setItem('usuarioLogado', JSON.stringify(usuario))
       router.push('/home')
     } else {
-      alert('E-mail ou senha incorretos!') 
+      alert('E-mail ou senha incorretos!')
     }
 }
 </script>
