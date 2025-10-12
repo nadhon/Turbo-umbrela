@@ -57,26 +57,37 @@ const cvv = ref("")
 const router = useRouter()
 
 function cadastrar() {
-  if(senha.value !== confirmarSenha.value){
+  if (senha.value !== confirmarSenha.value) {
     alert("As senhas não coincidem!")
     return
-  } else if(!nome.value || !email.value || !senha.value || !confirmarSenha.value || !validadeCartao.value || !cvv.value){
+  } else if (
+    !nome.value ||
+    !email.value ||
+    !senha.value ||
+    !confirmarSenha.value ||
+    !validadeCartao.value ||
+    !cvv.value
+  ) {
     alert("Por favor, preencha todos os campos!")
     return
   }
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
+  const usuarioExistente = usuarios.some(u => u.email === email.value)
   const novousuario = {
     nome: nome.value,
     email: email.value,
     senha: senha.value,
-    confirmarSenha: confirmarSenha.value,
     validadeCartao: validadeCartao.value,
     cvv: cvv.value,
-    tipo: 'cliente'
+    tipo: "cliente" // ou "admin" se for cadastro administrativo
   }
-  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+  if (usuarioExistente) {
+    alert("E-mail já cadastrado!")
+    return
+  }
   usuarios.push(novousuario)
-  localStorage.setItem('usuarios', JSON.stringify(usuarios))
-
+  localStorage.setItem("usuarios", JSON.stringify(usuarios))
+  alert("Cadastro realizado com sucesso!")
   router.push("/planos")
 }
 </script>

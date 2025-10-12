@@ -11,6 +11,10 @@
         Novo por aqui?
         <router-link to="/cadastro">Cadastre-se agora</router-link>
       </p>
+      <p class="links">
+        Esqueceu sua senha?
+        <router-link to="/esqueci-minha-senha">Esqueci minha senha</router-link>
+      </p>
     </div>
   </main>
 </template>
