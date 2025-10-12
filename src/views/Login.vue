@@ -27,9 +27,17 @@ function Entrar(){
     const usuario = usuarios.find(u => u.email === email.value && u.senha === senha.value)
     if(usuario){
       localStorage.setItem('usuarioLogado', JSON.stringify(usuario))
+      if(usuario.tipo === 'admin'){
+        router.push('/admin')
+        return
+      }
       router.push('/home')
     } else {
       alert('E-mail ou senha incorretos!')
     }
 }
+const admins = [
+  { nome: 'Admin', email: 'admin@turbo-umbrela.com', senha: 'admin123', tipo: 'admin' }
+]
+localStorage.setItem('usuarios', JSON.stringify(admins))
 </script>

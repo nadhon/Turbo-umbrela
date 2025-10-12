@@ -70,7 +70,8 @@ function cadastrar() {
     senha: senha.value,
     confirmarSenha: confirmarSenha.value,
     validadeCartao: validadeCartao.value,
-    cvv: cvv.value
+    cvv: cvv.value,
+    tipo: 'cliente'
   }
   const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
   usuarios.push(novousuario)

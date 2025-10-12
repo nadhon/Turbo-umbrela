@@ -53,6 +53,7 @@ function adicionarFilme() {
     alert('Filme adicionado com sucesso!')
 }
 function sair(){
+    localStorage.removeItem('usuarioLogado') // Opcional: deslogar o usuário
     router.push('/login')
 }
 </script>

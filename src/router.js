@@ -17,16 +17,24 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
 router.beforeEach((to, from, next) => {
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'))
-    if (usuarioLogado) {
-        if (to.path === '/login') {
+    if (to.path === '/admin') {
+        if (usuarioLogado && usuarioLogado.tipo === 'admin') {
+            next()
+        } else {
+            alert('Acesso restrito!')
+            next('/login')
+        }
+    } else if (usuarioLogado) {
+        if (to.path === '/login' || to.path === '/cadastro') {
             next('/home')
         } else {
             next()
         }
     } else {
-        if (to.path === '/login') {
+        if (to.path === '/login' || to.path === '/cadastro') {
             next()
         } else {
             next('/login')
