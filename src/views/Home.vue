@@ -1,58 +1,67 @@
 <template>
-  <div>
-    <header>
+  <div class="home">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">Turbo-Umbrela</div>
+      <input v-model="busca" class="buscar" placeholder="Buscar..." />
       <nav>
-        <a href="#" class="logo">Turbo-Umbrela</a>
-        <ul class="nav-list">
-          <li>
-            <button @click="sair">Sair</button>
-          </li>
-        </ul>
+        <button @click="sair">Sair</button>
       </nav>
     </header>
 
-    <main>
-      <section class="banner">
-        <img :src="bannerFilm.img" alt="Banner do Filme" />
-        <div class="banner-info">
-          <h1>{{ bannerFilm.title }}</h1>
-          <p>{{ bannerFilm.description }}</p>
-          <button @click="assistirFilme(bannerFilm)">Assistir</button>
+    <!-- BANNER -->
+    <section class="banner" v-if="bannerFilm">
+      <img class="banner-bg" :src="bannerFilm.img" alt="Banner do filme" />
+      <div class="banner-info">
+        <h1>{{ bannerFilm.title }}</h1>
+        <p>{{ bannerFilm.description }}</p>
+        <div class="banner-buttons">
+          <button class="assistir" @click="assistirFilme(bannerFilm)">▶ Assistir</button>
+          <button class="favoritar" @click="toggleFavorito(bannerFilm)">
+            {{ favoritosIds.includes(bannerFilm.id) ? 'Remover' : '+ Minha Lista' }}
+          </button>
         </div>
-      </section>
-      <div class="buscar-filmes">
-        <input v-model="busca" placeholder="buscar"/>
       </div>
-      <section class="filmes-grid">
-        <h3>Filmes em destaque</h3>
-        <div class="grid">
+    </section>
+
+    <!-- CATEGORIAS -->
+    <main class="conteudo">
+      <section v-for="(filmesCat, cat) in filmesPorCategoria" :key="cat" class="categoria">
+        <h2>{{ cat }}</h2>
+        <div class="carrossel">
           <div
-            v-for="(filme, index) in filmes.filter(f => f.title.toLowerCase().includes(busca.toLowerCase()))"
-            :key="index"
+            v-for="filme in filmesCat"
+            :key="filme.id"
             class="filme-card"
+            @click="assistirFilme(filme)"
           >
             <img :src="filme.img" :alt="filme.title" />
-            <h4>{{ filme.title }}</h4>
-            <button @click="toggleFavorito(filme)">
-              {{ favoritosIds.includes(filme.id) ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos' }}
-            </button>
+            <div class="filme-overlay">
+              <h4>{{ filme.title }}</h4>
+              <button @click.stop="toggleFavorito(filme)">
+                {{ favoritosIds.includes(filme.id) ? '💔' : '❤️' }}
+              </button>
+            </div>
           </div>
         </div>
       </section>
-      <section v-if="favoritos.length" class="filmes-grid">
-        <h3>Meus Favoritos</h3>
-        <div class="grid">
+
+      <!-- FAVORITOS -->
+      <section v-if="favoritos.length" class="categoria">
+        <h2>Minha Lista</h2>
+        <div class="carrossel">
           <div
-            v-for="(filme, index) in favoritos"
-            :key="index"
+            v-for="filme in favoritos"
+            :key="filme.id"
             class="filme-card"
+            @click="assistirFilme(filme)"
           >
-           <img :src="filme.img" :alt="filme.title"/>
-           <p>{{ filme.title }}</p>
+            <img :src="filme.img" :alt="filme.title" />
           </div>
         </div>
       </section>
     </main>
+
     <footer>
       <p>&copy; 2025 Turbo-Umbrela - Todos os direitos reservados.</p>
     </footer>
@@ -60,17 +69,62 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
-import { useRouter } from "vue-router"
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const busca = ref('')
 const filmes = ref([])
+const favoritosIds = ref([])
+const bannerFilm = ref(null)
 
+// Mock inicial
 onMounted(() => {
-  filmes.value = JSON.parse(localStorage.getItem("filmes")) || []
+  const mockFilmes = [
+    { id: 1, title: "A Última Ceia", description: "Um thriller sobrenatural", img: "https://via.placeholder.com/800x400", categoria: "Ação" },
+    { id: 2, title: "Noite Cômica", description: "Uma comédia leve", img: "https://via.placeholder.com/800x400", categoria: "Humor" },
+    { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico", img: "https://via.placeholder.com/800x400", categoria: "Terror" },
+    { id: 4, title: "Guerra de Titãs", description: "Ação épica e brutal", img: "https://via.placeholder.com/800x400", categoria: "Ação" },
+    { id: 5, title: "Piadas do Caos", description: "Humor nonsense", img: "https://via.placeholder.com/800x400", categoria: "Humor" },
+  ]
+  filmes.value = JSON.parse(localStorage.getItem("filmes")) || mockFilmes
+  favoritosIds.value = JSON.parse(localStorage.getItem("favoritosIds")) || []
+  bannerFilm.value = filmes.value[0]
+  localStorage.setItem("filmes", JSON.stringify(filmes.value))
 })
 
-function sair(index) {
-  router.push(`/login`)
+const filmesPorCategoria = computed(() => {
+  const filtrados = filmes.value.filter(f =>
+    f.title.toLowerCase().includes(busca.value.toLowerCase())
+  )
+  const porCat = {}
+  filtrados.forEach(f => {
+    if (!porCat[f.categoria]) porCat[f.categoria] = []
+    porCat[f.categoria].push(f)
+  })
+  return porCat
+})
+
+const favoritos = computed(() =>
+  filmes.value.filter(f => favoritosIds.value.includes(f.id))
+)
+
+function toggleFavorito(filme) {
+  if (favoritosIds.value.includes(filme.id)) {
+    favoritosIds.value = favoritosIds.value.filter(id => id !== filme.id)
+  } else {
+    favoritosIds.value.push(filme.id)
+  }
+  localStorage.setItem("favoritosIds", JSON.stringify(favoritosIds.value))
+}
+
+function assistirFilme(filme) {
+  localStorage.setItem("filmeSelecionado", JSON.stringify(filme))
+  router.push(`/video/${filme.id}`)
+}
+
+function sair() {
+  router.push("/login")
 }
 </script>
+

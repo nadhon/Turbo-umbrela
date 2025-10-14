@@ -20,28 +20,43 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+
 const email = ref('')
 const senha = ref('')
 const router = useRouter()
 
-function Entrar(){
-    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
-    const usuario = usuarios.find(u => u.email === email.value && u.senha === senha.value)
-    if(usuario){
-      localStorage.setItem('usuarioLogado', JSON.stringify(usuario))
-      if(usuario.tipo === 'admin'){
-        router.push('/admin')
-        return
-      }
-      router.push('/home')
-    } else {
-      alert('E-mail ou senha incorretos!')
-    }
+// Garantir que o admin existe
+onMounted(() => {
+  const usuariosExistentes = JSON.parse(localStorage.getItem('usuarios')) || []
+  if (!usuariosExistentes.some(u => u.email === 'admin@turbo-umbrela.com')) {
+    usuariosExistentes.push({
+      nome: 'Administrador',
+      email: 'admin@turbo-umbrela.com',
+      senha: 'admin123',
+      tipo: 'admin' // Adiciona o tipo
+    })
+    localStorage.setItem('usuarios', JSON.stringify(usuariosExistentes))
+  }
+})
+
+function Entrar() {
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+  const usuario = usuarios.find(u => u.email === email.value && u.senha === senha.value)
+
+  if (!usuario) {
+    alert('E-mail ou senha incorretos!')
+    return
+  }
+
+  localStorage.setItem('usuarioLogado', JSON.stringify(usuario))
+
+  // Redireciona conforme o tipo
+  if (usuario.tipo === 'admin') {
+    router.push('/admin') // tela do administrador
+  } else {
+    router.push('/home') // tela do usuário normal
+  }
 }
-const admins = [
-  { nome: 'Admin', email: 'admin@turbo-umbrela.com', senha: 'admin123', tipo: 'admin' }
-]
-localStorage.setItem('usuarios', JSON.stringify(admins))
 </script>

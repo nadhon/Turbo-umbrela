@@ -9,9 +9,11 @@
 
 <script setup>
 import { ref } from "vue"
+import { useRouter } from "vue-router"
 
 const email = ref("")
 const mensagem = ref("")
+const router = useRouter()
 
 function recuperarSenha() {
   const usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
@@ -22,5 +24,8 @@ function recuperarSenha() {
   } else {
     mensagem.value = "E-mail não encontrado!"
   }
+  setTimeout(() => {
+    router.push('/login')
+  }, 3000)
 }
 </script>

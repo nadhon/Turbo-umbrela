@@ -1,40 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Login from './views/Login.vue'
 import Cadastro from './views/Cadastro.vue'
+import Login from './views/Login.vue'
 import Home from './views/Home.vue'
 import Admin from './views/Admin.vue'
 import Planos from './views/Planos.vue'
-import Esqueciminhasenha from './views/Esqueciminhasenha.vue'
+import EsqueciMinhaSenha from './views/Esqueciminhasenha.vue'
+import VideoPlayer from './views/VideoPlayer.vue'
 
 const routes = [
-    { path: '/login', component: Login },
-    { path: '/cadastro', component: Cadastro },
-    { path: '/home', component: Home },
-    { path: '/planos', component: Planos },
-    { path: '/admin', component: Admin },
-    { path: '/esqueci-minha-senha', component: Esqueciminhasenha }
+  { path: '/', redirect: '/login' },
+  { path: '/cadastro', component: Cadastro },
+  { path: '/login', component: Login },
+  { path: '/home', component: Home },
+  { path: '/admin', component: Admin },
+  { path: '/planos', component: Planos },
+  { path: '/video/:id', component: VideoPlayer },
+  { path: '/esqueci-minha-senha', component: EsqueciMinhaSenha },
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
-})
-
-router.beforeEach((to, from, next) => {
-    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'))
-    if (usuarioLogado) {
-        if (to.path === '/login' || to.path === '/cadastro') {
-            next('/home')
-        } else {
-            next()
-        }
-    } else {
-        if (to.path === '/login' || to.path === '/cadastro') {
-            next()
-        } else {
-            next('/login')
-        }
-    }
+  history: createWebHistory(),
+  routes
 })
 
 export default router
