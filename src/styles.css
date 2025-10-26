@@ -267,39 +267,66 @@ main {
   box-shadow: 0 0 15px rgb(0, 119, 255);
 }
 
-.carrossel {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
-.filme-card {
-  position: relative;
-  flex: 0 0 auto;
-  width: 180px;
-  cursor: pointer;
-}
-.filme-card img {
+/* ESTILOS DE INPUT E BOTÃO DENTRO DE .RECUPERAR (ADICIONADOS) */
+.recuperar input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
   border-radius: 8px;
-  width: 100%;
-}
-.filme-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.6);
+  background: #222;
   color: #fff;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s;
+  outline: none;
 }
-.filme-card:hover .filme-overlay {
-  opacity: 1;
+
+.recuperar button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0078ff;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+.recuperar button:hover {
+  background-color: #005fcc;
+}
+
+/* ESTILOS DE MENSAGENS E LINKS (ADICIONADOS) */
+.recuperar p {
+  margin-top: 15px;
+  font-size: 0.95rem;
+}
+
+.recuperar .mensagem-sucesso {
+  color: #4CAF50; /* Verde para sucesso */
+  font-weight: bold;
+}
+
+.recuperar .mensagem-erro {
+  color: #F44336; /* Vermelho para erro */
+  font-weight: bold;
+}
+
+.recuperar .voltar,
+.recuperar .reenviar {
+  margin-top: 20px;
+  cursor: pointer;
+  color: #1e90ff; /* Cor do link */
+  text-decoration: none;
+  transition: color 0.3s;
+  display: block; /* Garante que ocupe a linha inteira */
+}
+
+.recuperar .voltar:hover,
+.recuperar .reenviar:hover {
+  color: #0078ff;
+  text-decoration: underline;
+}
+
 /* ---------- HOME E BANNER ---------- */
 .banner {
   position: relative;
@@ -434,7 +461,7 @@ main {
   cursor: pointer;
 }
 
-/* ---------- VIDEO PLAYER ---------- */
+/* ---------- VIDEO PLAYER (Controles antigos - Mantido por consistência) ---------- */
 .video-player-container {
   max-width: 900px;
   margin: 60px auto;
@@ -472,7 +499,7 @@ main {
   background-color: #005fcc;
 }
 
-/* ---------- RESPONSIVIDADE ---------- */
+/* ---------- RESPONSIVIDADE (Geral) ---------- */
 @media (max-width: 768px) {
   .banner-info h1 {
     font-size: 2rem;
@@ -606,7 +633,7 @@ main {
   background-color: #b0060f;
 }
 
-/* ---------- RESPONSIVIDADE ---------- */
+/* ---------- RESPONSIVIDADE (Admin) ---------- */
 @media (max-width: 768px) {
   .admin-panel form {
     flex-direction: column;
@@ -620,6 +647,7 @@ main {
     margin-top: 10px;
   }
 }
+/* ---------- VIDEO PLAYER WRAPPER (Estilos de Vídeo Avançados) ---------- */
 .video-player-wrapper {
   position:relative;
   max-width: 900px;

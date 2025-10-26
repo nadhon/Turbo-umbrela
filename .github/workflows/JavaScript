@@ -1,0 +1,29 @@
+// router/index.js (Exemplo)
+import { createRouter, createWebHistory } from 'vue-router'
+import EsqueciSenhaEmail from '../views/EsqueciSenhaEmail.vue' 
+import EsqueciSenhaCodigo from '../views/EsqueciSenhaCodigo.vue' 
+import EsqueciSenhaRedefinir from '../views/EsqueciSenhaRedefinir.vue' 
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    // ... suas outras rotas (Login, Home, etc.)
+    {
+      path: '/esqueci-senha',
+      name: 'esqueci-senha-email',
+      component: EsqueciSenhaEmail
+    },
+    {
+      path: '/esqueci-senha/codigo', // Caminho EXATO
+      name: 'esqueci-senha-codigo',
+      component: EsqueciSenhaCodigo
+    },
+    {
+      path: '/esqueci-senha/redefinir',
+      name: 'esqueci-senha-redefinir',
+      component: EsqueciSenhaRedefinir
+    },
+  ]
+})
+
+export default router

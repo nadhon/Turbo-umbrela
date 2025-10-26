@@ -11,10 +11,12 @@
         Novo por aqui?
         <router-link to="/cadastro">Cadastre-se agora</router-link>
       </p>
+      
       <p class="links">
         Esqueceu sua senha?
-        <router-link to="/esqueci-minha-senha">Esqueci minha senha</router-link>
+        <router-link to="/esqueci-senha">Esqueci minha senha</router-link>
       </p>
+      
     </div>
   </main>
 </template>
@@ -35,7 +37,7 @@ onMounted(() => {
       nome: 'Administrador',
       email: 'admin@turbo-umbrela.com',
       senha: 'admin123',
-      tipo: 'admin' // Adiciona o tipo
+      tipo: 'admin'
     })
     localStorage.setItem('usuarios', JSON.stringify(usuariosExistentes))
   }
