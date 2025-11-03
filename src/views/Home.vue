@@ -11,7 +11,24 @@
 
     <!-- BANNER -->
     <section class="banner" v-if="bannerFilm">
-      <img class="banner-bg" :src="bannerFilm.img" alt="Banner do filme" />
+      <div class="banner-video">
+        <video
+          v-if="bannerFilm.video"
+          class="banner-bg"
+          :src="bannerFilm.video"
+          autoplay
+          muted
+          loop
+          playsinline
+        ></video>
+        <img
+          v-else
+          class="banner-bg"
+          :src="bannerFilm.img"
+          alt="Banner do filme"
+        />
+      </div>
+
       <div class="banner-info">
         <h1>{{ bannerFilm.title }}</h1>
         <p>{{ bannerFilm.description }}</p>
@@ -81,8 +98,22 @@ const bannerFilm = ref(null)
 // Mock inicial
 onMounted(() => {
   const mockFilmes = [
-    { id: 1, title: "A Última Ceia", description: "Um thriller sobrenatural", img: "https://via.placeholder.com/800x400", categoria: "Ação" },
-    { id: 2, title: "Noite Cômica", description: "Uma comédia leve", img: "https://via.placeholder.com/800x400", categoria: "Humor" },
+    {
+      id: 1,
+      title: "Elephants Dream",
+      description: "Uma experiência surrealista em um mundo mecânico e misterioso.",
+      img: "https://via.placeholder.com/800x400",
+      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      categoria: "Ação"
+    },
+    {
+      id: 2,
+      title: "Noite Cômica",
+      description: "Uma comédia leve",
+      img: "https://via.placeholder.com/800x400",
+      video: "https://www.w3schools.com/html/movie.mp4",
+      categoria: "Humor"
+    },
     { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico", img: "https://via.placeholder.com/800x400", categoria: "Terror" },
     { id: 4, title: "Guerra de Titãs", description: "Ação épica e brutal", img: "https://via.placeholder.com/800x400", categoria: "Ação" },
     { id: 5, title: "Piadas do Caos", description: "Humor nonsense", img: "https://via.placeholder.com/800x400", categoria: "Humor" },
@@ -127,4 +158,3 @@ function sair() {
   router.push("/login")
 }
 </script>
-

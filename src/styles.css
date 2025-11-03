@@ -19,6 +19,13 @@ header {
   background-color: #0d1117;
   border-bottom: 1px solid #222;
   z-index: 1000;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 nav {
@@ -34,7 +41,38 @@ nav {
   font-size: 1.5rem;
   font-weight: bold;
 }
+.buscar {
+  justify-self: center;
+  width: 60%;
+  max-width: 600px;
+  margin: 0 20px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: #222;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
 
+}
+header nav{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+header nav button{
+  background-color:transparent;
+  color:#fff;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+header nav button:hover{
+  background-color:rgba(255,255,255,0.3);
+  border-color: rgba(30,144,255,0.6);
+}
 .nav-list {
   list-style: none;
   display: flex;
@@ -50,6 +88,18 @@ nav {
 
 .nav-list li a:hover {
   color: #1e90ff;
+}
+@media (max-width: 800px){
+  header {
+    padding: 10px 16px;
+  }
+  .busca {
+    flex: 1 1 200px;
+    max-width: none;
+    min-width: 0;
+    margin: 8px 0 0 0;
+    justify-self: center;
+  }
 }
 
 /* ---------- MENU MOBILE ---------- */
