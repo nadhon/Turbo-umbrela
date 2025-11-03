@@ -25,7 +25,7 @@
                 </div>
                 <div class="plano">
                     <h2>Premium</h2>
-                    <p>R$ 39,90/mês</p>
+                    <p>R$ 139,90/mês</p>
                     <ul>
                         <li>Acesso a filmes em Ultra HD</li>
                         <li>8 telas por vez</li>
