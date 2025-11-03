@@ -642,7 +642,7 @@ main {
 
 .admin-panel ul li button {
   margin-left: auto;
-  background-color: #e50914;
+  background-color: #1e90ff;
   border: none;
   padding: 5px 10px;
   color: #fff;
@@ -652,7 +652,7 @@ main {
 }
 
 .admin-panel ul li button:hover {
-  background-color: #b0060f;
+  background-color: #1e90ff;
 }
 
 /* ---------- LISTA DE USUÁRIOS ---------- */
@@ -669,7 +669,7 @@ main {
 /* ---------- BOTÃO SAIR ---------- */
 .admin-panel > button {
   margin-top: 30px;
-  background-color: #e50914;
+  background-color: #1e90ff;
   border: none;
   padding: 12px 25px;
   color: #fff;
@@ -680,7 +680,7 @@ main {
 }
 
 .admin-panel > button:hover {
-  background-color: #b0060f;
+  background-color: #005fcc;
 }
 
 /* ---------- RESPONSIVIDADE (Admin) ---------- */
