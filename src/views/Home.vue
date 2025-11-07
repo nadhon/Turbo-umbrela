@@ -3,8 +3,10 @@
     <!-- HEADER -->
     <header class="header">
       <div class="logo">Turbo-Umbrela</div>
-      <input v-model="busca" class="buscar" placeholder="Buscar..." />
-      <nav>
+      <input v-model="busca" class="buscar" placeholder="Buscar..." aria-label="Buscar"/>
+      <nav class="header-right">
+        <button @click="notifications" aria-label="Notificações"> 🔔 </button>
+        <!--<img class="avatar" src="/avatar.png" alt="Perfil" @click="abrirPerfil"/>-->
         <button @click="sair">Sair</button>
       </nav>
     </header>
@@ -40,26 +42,21 @@
         </div>
       </div>
     </section>
-
+    <!-- Carrossel -->
+    
+    
     <!-- CATEGORIAS -->
     <main class="conteudo">
       <section v-for="(filmesCat, cat) in filmesPorCategoria" :key="cat" class="categoria">
         <h2>{{ cat }}</h2>
-        <div class="carrossel">
-          <div
-            v-for="filme in filmesCat"
-            :key="filme.id"
-            class="filme-card"
-            @click="assistirFilme(filme)"
-          >
-            <img :src="filme.img" :alt="filme.title" />
-            <div class="filme-overlay">
-              <h4>{{ filme.title }}</h4>
-              <button @click.stop="toggleFavorito(filme)">
-                {{ favoritosIds.includes(filme.id) ? '💔' : '❤️' }}
-              </button>
+        <div class="carrossel-wrapper">
+          <button class="nav left" @click="scroll(-1)">&#10094;</button>
+          <div class="carrossel" ref="carrossel" @keydown.left.prevent="scroll(-1)" @keydown.right.prevent="scroll(1)" tabindex="0">
+            <div v-for="filme in filmes" :key="filme.id" class="filme-card" @mouseenter="previewStart(filme)" @mouseleave="previewStop">
+              <img :src="filme.img" :alt="filme.title" :loading="lazy"/>
             </div>
           </div>
+          <button class="nav right" @click="scroll(1)">&#10095;</button>
         </div>
       </section>
 
@@ -156,5 +153,12 @@ function assistirFilme(filme) {
 
 function sair() {
   router.push("/login")
+}
+const carrossel = ref(null)
+function scroll(direction) {
+  const el = carrossel.value
+  if(!el) return
+  const width = el.clientWidth
+  el.scrollBy({ left: direction * width, behavior: 'smooth' })
 }
 </script>
