@@ -13,7 +13,8 @@ import VideoPlayer from './views/VideoPlayer.vue'
 import EsqueciSenhaEmail from './views/EsqueciSenhaEmail.vue'
 import EsqueciSenhaCodigo from './views/EsqueciSenhaCodigo.vue'
 import EsqueciSenhaRedefinir from './views/EsqueciSenhaRedefinir.vue'
-
+import { getAuth } from "firebase/auth";
+import {doc, getDocs} from "./firebase/firebase.js";
 
 const routes = [
   // Rotas Padrão
@@ -49,5 +50,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+router.beforeEach(async (to, from, next) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (to.meta.requiresAuth && !user) return next({ name: 'login'});
+  if (to.meta.requiresAdmin) {
+    if (!user) return next({ name: 'login' });
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (!snap.exists() || snap.data().role !== 'admin') return next({ name: 'login'});
+  }
+  next();
+});
 
 export default router

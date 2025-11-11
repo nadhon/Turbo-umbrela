@@ -1,48 +1,10 @@
-// stores/filmes.js
-import { defineStore } from 'pinia'
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebase.js";
 
-export const useFilmesStore = defineStore('filmes', {
-  state: () => ({
-    filmes: [],
-    favoritosIds: [],
-    bannerFilm: null,
-    filmeSelecionado: null,
-    // opcional: progresso de visualização
-    watchProgress: {}
-  }),
-  actions: {
-    initMockIfEmpty() {
-      const mockFilmes = [
-        { id: 1, title: "Elephants Dream", description: "Uma experiência surrealista em um mundo mecânico e misterioso.", img: "https://via.placeholder.com/800x400", video: "https://www.w3schools.com/html/mov_bbb.mp4", previewUrl: "https://www.w3schools.com/html/mov_bbb.mp4", categoria: "Ação" },
-        { id: 2, title: "Noite Cômica", description: "Uma comédia leve", img: "https://via.placeholder.com/800x400", video: "https://www.w3schools.com/html/movie.mp4", previewUrl: "https://www.w3schools.com/html/movie.mp4", categoria: "Humor" },
-        { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico", img: "https://via.placeholder.com/800x400", previewUrl: "", categoria: "Terror" },
-        { id: 4, title: "Guerra de Titãs", description: "Ação épica e brutal", img: "https://via.placeholder.com/800x400", previewUrl: "", categoria: "Ação" },
-        { id: 5, title: "Piadas do Caos", description: "Humor nonsense", img: "https://via.placeholder.com/800x400", previewUrl: "", categoria: "Humor" },
-      ]
-      const saved = JSON.parse(localStorage.getItem('filmes'))
-      this.filmes = saved && saved.length ? saved : mockFilmes
-      this.favoritosIds = JSON.parse(localStorage.getItem('favoritosIds')) || []
-      this.bannerFilm = this.filmes[0] || null
-      localStorage.setItem('filmes', JSON.stringify(this.filmes))
-    },
-    toggleFavoritoById(id) {
-      if (this.favoritosIds.includes(id)) {
-        this.favoritosIds = this.favoritosIds.filter(x => x !== id)
-      } else {
-        this.favoritosIds.push(id)
-      }
-      localStorage.setItem('favoritosIds', JSON.stringify(this.favoritosIds))
-    },
-    setFilmeSelecionado(filme) {
-      this.filmeSelecionado = filme
-      localStorage.setItem('filmeSelecionado', JSON.stringify(filme))
-    },
-    setBannerById(id) {
-      const f = this.filmes.find(x => x.id === id)
-      if (f) this.bannerFilm = f
-    },
-    saveFilmesToLocal() {
-      localStorage.setItem('filmes', JSON.stringify(this.filmes))
-    },
-  },
-})
+export async function listarFilmes() {
+  const snap = await getDocs(collection(db, "filmes"));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+export async function adicionarFilme(payload) { return await addDoc(collection(db, "filmes"), { ...payload, createdAt: new Date().toISOString() }); }
+export async function editarFilme(id, changes) { await updateDoc(doc(db, "filmes", id), changes); }
+export async function deletarFilme(id) { await deleteDoc(doc(db, "filmes", id)); }
