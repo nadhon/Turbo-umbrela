@@ -45,8 +45,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
-import { useRouter } from "vue-router"
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import {auth, db } from "../firebase/firebase.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 const nome = ref("")
 const email = ref("")
@@ -54,9 +57,10 @@ const senha = ref("")
 const confirmarSenha = ref("")
 const validadeCartao = ref("")
 const cvv = ref("")
+
 const router = useRouter()
 
-function cadastrar() {
+async function cadastrar() {
   if (senha.value !== confirmarSenha.value) {
     alert("As senhas não coincidem!")
     return
@@ -71,23 +75,26 @@ function cadastrar() {
     alert("Por favor, preencha todos os campos!")
     return
   }
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
-  const usuarioExistente = usuarios.some(u => u.email === email.value)
-  const novousuario = {
-    nome: nome.value,
-    email: email.value,
-    senha: senha.value,
-    validadeCartao: validadeCartao.value,
-    cvv: cvv.value,
-    tipo: "cliente" // ou "admin" se for cadastro administrativo
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      senha.value
+    );
+    const user = userCredential.user;
+    
+    await setDoc(doc(db, "users", user.uid), {
+      nome: nome.value,
+      email: email.value,
+      validadeCartao: validadeCartao.value,
+      cvv: cvv.value,
+      tipo: "cliente",
+      plano: null
+    });
+    alert("Cadastro realizado com sucesso!");
+    router.push("/planos");
+  } catch (error) {
+    alert("Erro ao cadastrar: " + error.message); 
   }
-  if (usuarioExistente) {
-    alert("E-mail já cadastrado!")
-    return
-  }
-  usuarios.push(novousuario)
-  localStorage.setItem("usuarios", JSON.stringify(usuarios))
-  alert("Cadastro realizado com sucesso!")
-  router.push("/planos")
 }
 </script>

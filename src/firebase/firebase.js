@@ -4,11 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyDY824riKv1F2rEIBWGSSOV2goZyuY4VEM",
+  authDomain: "turbo-umbrela.firebaseapp.com",
+  projectId: "turbo-umbrela",
+  storageBucket: "turbo-umbrela.firebasestorage.app",
+  messagingSenderId: "415180108085",
+  appId: "1:415180108085:web:a3cc33051037e709ae9c7c",
+  measurementId: "G-RZEL2V6Q8S"
 };
 
 const app = initializeApp(firebaseConfig);

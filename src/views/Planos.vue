@@ -40,12 +40,27 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
+import { auth, db } from "../firebase/firebase.js";
+import { doc, updateDoc } from "firebase/firestore";
 
-const router = useRouter()
-function assinarPlano(plano){
-    alert(`Você assinou o plano ${plano}!`)
-    router.push('/home')
+const router = useRouter();
+
+async function assinarPlano(plano){
+    const user = auth.currentUser;
+
+    if(!user){
+        alert("Você precisa estar logado!");
+        router.push("/login");
+        return;
+    }
+    try {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, {plano});
+        alert(`Plano assinado ${plano}!`);
+        router.push("/home");
+    } catch (error) {
+        alert("Erro ao assinar plano: " + error.message);
+    }
 }
-
 </script>
