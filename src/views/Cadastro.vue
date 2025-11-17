@@ -21,18 +21,6 @@
           placeholder="Confirmar senha"
           type="password"
         />
-        <input
-          v-model="numeroCartao"
-          placeholder="Número do cartão"
-        />
-        <input
-          v-model="validadeCartao"
-          placeholder="Validade do cartão"
-        />
-        <input
-          v-model="cvv"
-          placeholder="CVV"
-        />
         <button type="submit">Cadastrar</button>
       </form>
 
@@ -52,9 +40,6 @@ const nome = ref("")
 const email = ref("")
 const senha = ref("")
 const confirmarSenha = ref("")
-const validadeCartao = ref("")
-const cvv = ref("")
-const router = useRouter()
 
 function cadastrar() {
   if (senha.value !== confirmarSenha.value) {
@@ -64,9 +49,7 @@ function cadastrar() {
     !nome.value ||
     !email.value ||
     !senha.value ||
-    !confirmarSenha.value ||
-    !validadeCartao.value ||
-    !cvv.value
+    !confirmarSenha.value
   ) {
     alert("Por favor, preencha todos os campos!")
     return
@@ -77,8 +60,6 @@ function cadastrar() {
     nome: nome.value,
     email: email.value,
     senha: senha.value,
-    validadeCartao: validadeCartao.value,
-    cvv: cvv.value,
     tipo: "cliente" // ou "admin" se for cadastro administrativo
   }
   if (usuarioExistente) {
