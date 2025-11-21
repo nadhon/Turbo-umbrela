@@ -4,7 +4,8 @@
       <form @submit.prevent="Entrar">
         <h1>Login</h1>
         <input v-model="email" placeholder="E-mail" />
-        <input v-model="senha" placeholder="Senha" />
+        <input :type="mostrarSenha ? 'text' : 'password'" v-model="senha" placeholder="Senha" />
+        <input type="checkbox" v-model="mostrarSenha">Mostrar senha</input>
         <button type="submit">Entrar</button>
       </form>
       <p class="links">
@@ -27,6 +28,7 @@ import { useRouter } from 'vue-router'
 
 const email = ref('')
 const senha = ref('')
+const mostrarSenha =  ref(false)
 const router = useRouter()
 
 // Garantir que o admin existe

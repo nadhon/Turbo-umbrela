@@ -46,6 +46,7 @@
       <section v-for="(filmesCat, cat) in filmesPorCategoria" :key="cat" class="categoria">
         <h2>{{ cat }}</h2>
         <div class="carrossel">
+          <button class="nav left" @click="scrollRow(-1)"><</button>
           <div
             v-for="filme in filmesCat"
             :key="filme.id"
@@ -60,6 +61,7 @@
               </button>
             </div>
           </div>
+          <button class="nav right" @click="scrollRow(1)">></button>
         </div>
       </section>
 
