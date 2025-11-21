@@ -147,15 +147,6 @@ header nav button:hover{
 main {
   flex: 1;
   padding: 120px 20px 60px;
-  animation: cinemaZoom 12s ease-in-out infinit alternate;
-}
-@keyframe cinemaZoom{
-  0%{
-    transform: scale(1)
-  }
-  100% {
-    transform: scale(2)
-  }
 }
 
 /* ---------- BLOCO DE LOGIN ---------- */
