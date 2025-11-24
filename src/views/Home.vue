@@ -130,7 +130,7 @@ onMounted(() => {
       video: "https://www.w3schools.com/html/movie.mp4",
       categoria: "Humor"
     },
-    { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico", img: "https://via.placeholder.com/800x400", categoria: "Terror" },
+    { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico", img: "https://upload.wikimedia.org/wikipedia/pt/2/26/Urban_Legends_Final_Cut.jpg", categoria: "Terror" },
     { id: 4, title: "Guerra de Titãs", description: "Ação épica e brutal", img: "https://via.placeholder.com/800x400", categoria: "Ação" },
     { id: 5, title: "Piadas do Caos", description: "Humor nonsense", img: "https://via.placeholder.com/800x400", categoria: "Humor" },
   ]

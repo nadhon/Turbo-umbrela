@@ -1,7 +1,7 @@
 <template>
   <main
     :style="{
-      backgroundImage: 'url(src/views/img/banerfilme.png)',
+      backgroundImage: 'url(src/views/img/logo.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center'
     }"
