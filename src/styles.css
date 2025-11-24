@@ -16,27 +16,12 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
   width: 100%;
   background-color: #0d1117;
   border-bottom: 1px solid #222;
   z-index: 1000;
-<<<<<<< Updated upstream
   display: grid;
   grid-template-columns: auto 1fr auto;
-=======
-  right: 0;
-  height: 64px;
-  display: flex;
->>>>>>> 438672dc3277fbaedfc14de02754963c8005ef46
-=======
-
-  display: grid;
-  grid-template-columns: auto 1fr auto;
->>>>>>> Stashed changes
   align-items: center;
   gap: 20px;
   padding: 15px 40px;
@@ -49,23 +34,19 @@ nav {
   align-items: center;
   padding: 15px 30px;
 }
-/* manipulação da logo tamano e etc*/
+
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
-<<<<<<< Updated upstream
-
-=======
 .logo img {
-  height: auto;
-  width: 100px;
+  height: 40px;
+  width: auto;
 }
-/* estilização da barra de busca*/
->>>>>>> Stashed changes
+
 .buscar {
   justify-self: center;
   width: 60%;
@@ -199,17 +180,8 @@ main {
 .login input {
   width: 100%;
   padding: 12px;
-<<<<<<< Updated upstream
-<<<<<<< HEAD
   margin-bottom: 15px;
   border: 1px solid #333;
-=======
-  margin-bottom: 10px;
-=======
-  margin-bottom: 15px;
->>>>>>> Stashed changes
-  border: none;
->>>>>>> 438672dc3277fbaedfc14de02754963c8005ef46
   border-radius: 8px;
   background: rgba(34, 34, 34, 0.9);
   color: #fff;
