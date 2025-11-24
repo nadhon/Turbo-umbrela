@@ -5,6 +5,7 @@
       <div class="logo">
         <img src="../views/img/Logo.png" alt="Logo Turbo-Umbrela"/>
       </div>
+      <nav class="Menu"></nav>
       <nav>
         <input v-model="busca" class="buscar" placeholder="Buscar..." />
         <button @click="sair">Sair</button>
