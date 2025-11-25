@@ -1,20 +1,20 @@
 <template>
   <div class="home">
-    <!-- HEADER -->
     <header class="header">
-      <div class="logo">Turbo-Umbrela</div>
-      <input v-model="busca" class="buscar" placeholder="Buscar..." />
-      <nav>
+      <div class="logo">
+        <img src="../views/img/Logo.png" alt="Logo Turbo-Umbrela" />
+      </div>
+      
+      <nav class="Menu">
+        <input v-model="busca" class="buscar" placeholder="Buscar..." />
         <button @click="sair">Sair</button>
       </nav>
     </header>
 
-    <!-- BANNER -->
     <section class="banner" v-if="bannerFilm">
-      <div class="bannerVideo">
+      <div class="banner-video">
         <video
           v-if="bannerFilm.video"
-          ref="bannerVideo"
           class="banner-bg"
           :src="bannerFilm.video"
           autoplay
@@ -26,7 +26,7 @@
           v-else
           class="banner-bg"
           :src="bannerFilm.img"
-          alt="Banner do filme"
+          :alt="bannerFilm.title"
         />
       </div>
 
@@ -42,46 +42,60 @@
       </div>
     </section>
 
-    <!-- CATEGORIAS -->
     <main class="conteudo">
       <section v-for="(filmesCat, cat) in filmesPorCategoria" :key="cat" class="categoria">
         <h2>{{ cat }}</h2>
-        <div class="carrossel">
-          <button class="nav left" @click="scrollRow(-1)"><</button>
-          <div
-            v-for="filme in filmesCat"
-            :key="filme.id"
-            class="filme-card"
-            @click="assistirFilme(filme)"
-            @mouseenter="startCardPreview(filme, $event)"
-            @mouseleave="stopCardPreview(filme, $event)"
-          >
-          <video class="card-preview" style="display:none"></video>
-            <img :src="filme.img" :alt="filme.title" />
-            <div class="filme-overlay">
-              <h4>{{ filme.title }}</h4>
-              <button @click.stop="toggleFavorito(filme)">
-                {{ favoritosIds.includes(filme.id) ? '💔' : '❤️' }}
-              </button>
+        <div class="carrossel-wrapper">
+          <button class="nav left" @click="scrollRow(cat, -1)">
+            <span class="arrow">❮</span>
+          </button>
+          <div :ref="el => carrosselRefs[cat] = el" class="carrossel">
+            <div
+              v-for="filme in filmesCat"
+              :key="filme.id"
+              class="filme-card"
+              @click="assistirFilme(filme)"
+            >
+              <img :src="filme.img" :alt="filme.title" />
+              <div class="filme-overlay">
+                <h4>{{ filme.title }}</h4>
+                <button @click.stop="toggleFavorito(filme)">
+                  {{ favoritosIds.includes(filme.id) ? '💔' : '❤️' }}
+                </button>
+              </div>
             </div>
           </div>
-          <button class="nav right" @click="scrollRow(1)">></button>
+          <button class="nav right" @click="scrollRow(cat, 1)">
+            <span class="arrow">❯</span>
+          </button>
         </div>
       </section>
 
-      <!-- FAVORITOS -->
       <section v-if="favoritos.length" class="categoria">
         <h2>Minha Lista</h2>
-        <div class="carrossel">
-          <div
-            v-for="filme in favoritos"
-            :key="filme.id"
-            class="filme-card"
-            @click="assistirFilme(filme)"
-            @mouseenter="startCardPreview(filme, $event)"
-          >
-            <img :src="filme.img" :alt="filme.title" />
+        <div class="carrossel-wrapper">
+          <button class="nav left" @click="scrollRow('favoritos', -1)">
+            <span class="arrow">❮</span>
+          </button>
+          <div :ref="el => carrosselRefs['favoritos'] = el" class="carrossel">
+            <div
+              v-for="filme in favoritos"
+              :key="filme.id"
+              class="filme-card"
+              @click="assistirFilme(filme)"
+            >
+              <img :src="filme.img" :alt="filme.title" />
+              <div class="filme-overlay">
+                <h4>{{ filme.title }}</h4>
+                <button @click.stop="toggleFavorito(filme)">
+                  {{ favoritosIds.includes(filme.id) ? '💔' : '❤️' }}
+                </button>
+              </div>
+            </div>
           </div>
+          <button class="nav right" @click="scrollRow('favoritos', 1)">
+            <span class="arrow">❯</span>
+          </button>
         </div>
       </section>
     </main>
@@ -93,7 +107,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -102,14 +116,8 @@ const filmes = ref([])
 const favoritosIds = ref([])
 const bannerFilm = ref(null)
 
-// controle do ciclo do banner
-const index = ref(0)
-let timerID = null
-const VIDEO_DURATION = 30 * 1000
-const IMAGE_DURATION = 8 * 1000
-
-// ref para o elemento de video
-const bannerVideo = ref(null)
+// Usado para armazenar as referências dos elementos do carrossel (para a rolagem)
+const carrosselRefs = ref({}) 
 
 // Mock inicial
 onMounted(() => {
@@ -118,90 +126,27 @@ onMounted(() => {
       id: 1,
       title: "Elephants Dream",
       description: "Uma experiência surrealista em um mundo mecânico e misterioso.",
-      img: "https://via.placeholder.com/800x400",
-      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtGF_fA2aM-xLb5WF4PyXAOpGkRuBFH241dg&s", 
+      video: "https://www.w3schools.cohttps://download.blender.org/durian/trailer/sintel_trailer-480p.mp4m/html/mov_bbb.mp4",
       categoria: "Ação"
     },
     {
       id: 2,
       title: "Noite Cômica",
-      description: "Uma comédia leve",
-      img: "https://via.placeholder.com/800x400",
+      description: "Uma comédia leve.",
+      img: "https://via.placeholder.com/200x300",
       video: "https://www.w3schools.com/html/movie.mp4",
       categoria: "Humor"
     },
-    { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico", img: "https://upload.wikimedia.org/wikipedia/pt/2/26/Urban_Legends_Final_Cut.jpg", categoria: "Terror" },
-    { id: 4, title: "Guerra de Titãs", description: "Ação épica e brutal", img: "https://via.placeholder.com/800x400", categoria: "Ação" },
-    { id: 5, title: "Piadas do Caos", description: "Humor nonsense", img: "https://via.placeholder.com/800x400", categoria: "Humor" },
+    { id: 3, title: "Pesadelo Urbano", description: "Terror psicológico.", img: "https://upload.wikimedia.org/wikipedia/pt/2/26/Urban_Legends_Final_Cut.jpg", categoria: "Terror" },
+    { id: 4, title: "Guerra de Titãs", description: "Ação épica e brutal.", img: "https://upload.wikimedia.org/wikipedia/pt/f/f9/Clash_of_the_Titans_P%C3%B4ster.jpg", categoria: "Ação" },
+    { id: 5, title: "Piadas do Caos", description: "Humor nonsense.", img: "https://via.placeholder.com/200x300", categoria: "Humor" },
   ]
   filmes.value = JSON.parse(localStorage.getItem("filmes")) || mockFilmes
   favoritosIds.value = JSON.parse(localStorage.getItem("favoritosIds")) || []
-  index.value = 0
-  bannerFilm.value = filmes.value[index.value] || null
+  bannerFilm.value = filmes.value[0]
   localStorage.setItem("filmes", JSON.stringify(filmes.value))
-  
-  startBannerCycle()
-  nextTick(() => {
-    if(bannerVideo.value){
-      bannerVideo.value.addEventListener("timeupdate", () =>{
-        if (bannerVideo.value.currentTime >= 10){
-          bannerVideo.value.currentTime = 2
-        }
-      })
-    }
-
-  })
 })
-onBeforeUnmount(() => {
-  stopBannerCycle()
-})
-
-function atualizarBannerPorIndex(){
-  bannerFilm.value = filmes.value[index.value] || null
-
-  // se for vídeo, tenta dar play depois do render
-  if(bannerFilm.value && bannerFilm.value.video){
-    nextTick(() =>{
-      try {
-        if(bannerVideo.value && typeof bannerVideo.value.play === 'function'){
-          bannerVideo.value.currentTime = 0
-          bannerVideo.value.play().catch(()=>{null})
-        }
-      } catch(e){}
-    })
-  }
-}
-
-function proximoBanner(){
-  if(!filmes.value || filmes.value.length === 0) {
-    bannerFilm.value = null
-    return
-  }
-  index.value = (index.value + 1) %filmes.value.length
-  atualizarBannerPorIndex()
-}
-
-function agendarProximaTroca(){
-  stopBannerCycle()
-  if (!bannerFilm.value) return
-
-  const temVideo = !!bannerFilm.value.video
-  const dur = temVideo ? VIDEO_DURATION : IMAGE_DURATION
-
-  timerID = setTimeout(() =>{
-    proximoBanner()
-    agendarProximaTroca()
-  }, dur)
-}
-
-function startBannerCycle(){
-  atualizarBannerPorIndex()
-  agendarProximaTroca()
-}
-
-function stopBannerCycle(){
-  if(timerID) { clearTimeout(timerID); timerID = null}
-}
 
 const filmesPorCategoria = computed(() => {
   const filtrados = filmes.value.filter(f =>
@@ -232,26 +177,18 @@ function assistirFilme(filme) {
   localStorage.setItem("filmeSelecionado", JSON.stringify(filme))
   router.push(`/video/${filme.id}`)
 }
-function startCardPreview(filme, event){
-  const el = event.currentTarget.querySelector('video.card-preview')
-  if (!el) return
-  const src = filme.preview || filme.video
-  if (!src) return
-  event.currentTarget.querySelector('img').style.display = 'none'
-  el.src = src
-  el.muted = true
-  el.play().catch(() =>{})
-  el.style.display = 'block'
-}
-function stopCardPreview(filme, event){
-  const el = event.currentTarget.querySelector('video.card-preview')
-  if(!el) return
-  el.pause()
-  el.style.display = 'none'
-  event.currentTarget.querySelector('img').style.display = 'block'
-}
 
 function sair() {
+  localStorage.removeItem("usuarioLogado") // Limpa o usuário logado
   router.push("/login")
+}
+
+function scrollRow(cat, direction) {
+  const rowElement = carrosselRefs.value[cat]
+  if (rowElement) {
+    // Rola 80% da largura do carrossel
+    const scrollAmount = rowElement.offsetWidth * 0.8 * direction; 
+    rowElement.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
 }
 </script>

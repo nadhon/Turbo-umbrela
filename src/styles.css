@@ -36,10 +36,15 @@ nav {
 }
 
 .logo {
-  color: #1e90ff;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 1.5rem;
   font-weight: bold;
+}
+.logo img {
+  height: 40px;
+  width: auto;
 }
 
 .buscar {
