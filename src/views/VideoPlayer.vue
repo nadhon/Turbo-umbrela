@@ -1,77 +1,49 @@
 <template>
-  <div class="video-player-wrapper"
-        @mousemove="resetHideTimer"
-        @click="resetHideTimer"
-        @touchstart.prevent="resetHideTimer"
-        @keydown.space.prevent="toggleplay"
-        tabindex="0"
-  >
-    <h1>{{ filme.title }}</h1>
-    
-    <video 
-    ref="videoPlayer" 
-    controls class="video-player"
-    :src="videoAtual.url"
-    @play="onPlay"
-    @pause="onPause"
-    @timeupdate="onTimeupdate"
-    playsinline
-    ></video>
-
-    <!-- Botões de Resolução -->
-    <div class="resolucao" :class="{visble: showControls }" aria-hidden="false">
-      <span class="resolucao-label">Resolução:</span>
-      <button
-        v-for="src in videoSources"
-        :key="src.ref"
-        @click="mudarResolucao(src)"
-        :class="['chip', { ativo: videoAtual.ref === src.ref }]"
-        :aria-pressed="videoAtual.ref === src.ref"
-
-      >
-        {{ src.ref }}
-      </button>
+  <div class="video-player-wrapper" tabindex="0" @mousemove="resetHideTimer" @click="resetHideTimer" @touchstart.prevent="resetHideTimer">
+    <div v-if="!filme || !videoSrc" class="erro">
+      <h2>Nenhum filme selecionado ou arquivo inválido</h2>
+      <button @click="sair">Voltar</button>
     </div>
 
-    <!-- Controles do Vídeo -->
-    <div class="controles" :class="{visble: showControls}" role="group" aria-label="Controles do vídeo">
-      <button class="btn-ghost" @click="voltar" title="Voltar 15s">« 15s</button>
-      <button class="btn-primary" v-if="isPaused" @click="playVideo" title="Play">▶</button>
-      <button class="btn-primary" v-else @click="pauseVideo" title="Pausar">⏸</button>
-      <button class="btn-ghost" @click="stopVideo" title="Parar">⏹</button>
-      <button class="btn-ghost" @click="avancar" title="Avançar 15s">15s »</button>
-      <button class="btn-exit" @click="sair" title="Sair">Sair</button>
+    <div v-else class="player-area">
+      <h1>{{ filme.title }}</h1>
+
+      <video
+        ref="videoPlayer"
+        class="video-player"
+        :src="videoSrc"
+        controls
+        playsinline
+        @play="onPlay"
+        @pause="onPause"
+        @timeupdate="onTimeupdate"
+      ></video>
+
+      <div class="controles" :class="{ visble: showControls }" role="group" aria-label="Controles do vídeo">
+        <button class="btn-ghost" @click="voltar15">« 15s</button>
+        <button class="btn-primary" v-if="isPaused" @click="playVideo">▶</button>
+        <button class="btn-primary" v-else @click="pauseVideo">⏸</button>
+        <button class="btn-ghost" @click="stopVideo">⏹</button>
+        <button class="btn-ghost" @click="avancar15">15s »</button>
+        <button class="btn-exit" @click="sair">Sair</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import { useRouter } from 'vue-router'
-
+import { ref, onMounted, onBeforeUnmount } from "vue"
+import { useRouter } from "vue-router"
 const router = useRouter()
+
 const videoPlayer = ref(null)
 const hideTimer = ref(null)
 const showControls = ref(true)
 const isPaused = ref(true)
 
-const filme = JSON.parse(localStorage.getItem('filmeSelecionado')) || {
-  title: 'Filme não encontrado',
-  url: '',
-  url360: '',
-  url720: '',
-  url1080: ''
-}
+const filme = ref(null)
+const videoSrc = ref("")
 
-const videoSources = ref([
-  { ref: '360p', url: filme.url360 || filme.url },
-  { ref: '720p', url: filme.url720 || filme.url },
-  { ref: '1080p', url: filme.url1080 || filme.url }
-])
-
-const videoAtual = ref(videoSources.value[0])
-
-/* Timer: mostra controles e esconde após X ms de inatividade */
 const HIDE_DELAY = 2500
 
 function clearHideTimer() {
@@ -80,70 +52,42 @@ function clearHideTimer() {
     hideTimer.value = null
   }
 }
-
 function startHideTimer() {
   clearHideTimer()
   hideTimer.value = setTimeout(() => {
     showControls.value = false
   }, HIDE_DELAY)
 }
-
-/* Chamado sempre que o usuário interage (mousemove, touch, click) */
 function resetHideTimer() {
   showControls.value = true
   startHideTimer()
 }
 
-/* Player controls */
 function playVideo() {
-  videoPlayer.value?.play()
+  videoPlayer.value?.play().catch(() => {})
 }
 function pauseVideo() {
   videoPlayer.value?.pause()
 }
-function togglePlay() {
-  if (!videoPlayer.value) return
-  if (videoPlayer.value.paused) videoPlayer.value.play()
-  else videoPlayer.value.pause()
-}
-
 function stopVideo() {
   if (videoPlayer.value) {
     videoPlayer.value.pause()
     videoPlayer.value.currentTime = 0
   }
 }
-
-function voltar() {
+function voltar15() {
   if (videoPlayer.value) videoPlayer.value.currentTime = Math.max(0, videoPlayer.value.currentTime - 15)
+  resetHideTimer()
 }
-
-function avancar() {
+function avancar15() {
   if (videoPlayer.value) videoPlayer.value.currentTime = Math.min(videoPlayer.value.duration || Infinity, videoPlayer.value.currentTime + 15)
+  resetHideTimer()
 }
-
 function sair() {
-  router.push('/home')
+  localStorage.removeItem("filmeSelecionado")
+  router.push("/home")
 }
 
-/* troca de resolução mantendo tempo e estado de reprodução */
-function mudarResolucao(source) {
-  if (!videoPlayer.value) return
-  const tempo = videoPlayer.value.currentTime || 0
-  const pausado = videoPlayer.value.paused
-  videoAtual.value = source
-  // trocar src e forçar reload do media
-  videoPlayer.value.src = source.url
-  // alguns navegadores requerem load()
-  videoPlayer.value.load()
-  videoPlayer.value.currentTime = tempo
-  if (!pausado) {
-    // play pode falhar por políticas de autoplay em alguns browsers, mas tentamos
-    videoPlayer.value.play().catch(() => {})
-  }
-}
-
-/* Eventos do vídeo para sincronizar estado dos controles */
 function onPlay() {
   isPaused.value = false
   resetHideTimer()
@@ -153,30 +97,56 @@ function onPause() {
   showControls.value = true
   clearHideTimer()
 }
-function onTimeUpdate() {
-  // opcional: aqui você pode atualizar uma barra de progresso se quiser
-}
+function onTimeupdate() {}
 
-/* Montagem / desmontagem: adicionar listeners de teclado e iniciar timer */
 onMounted(() => {
-  // iniciar timer
+  const raw = localStorage.getItem("filmeSelecionado")
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw)
+      filme.value = {
+        id: parsed.id,
+        title: parsed.title,
+        description: parsed.description,
+        img: parsed.img,
+        url: parsed.url || parsed.videoUrl || parsed.videoURL || ""
+      }
+    } catch (e) {
+      filme.value = null
+    }
+  } else {
+    filme.value = null
+  }
+
+  if (filme.value && filme.value.url) {
+    // normaliza letras maiúsculas/minúsculas do caminho (garante que a pasta usada seja /videos)
+    let path = filme.value.url
+    if (path.startsWith("/Filmes/")) {
+      path = path.replace("/Filmes/", "/videos/")
+    }
+    videoSrc.value = path
+    setTimeout(() => playVideo(), 200)
+  }
+
   startHideTimer()
 
-  // evitar que controles some quando o mouse fica parado sobre o botão (o próprio resetHideTimer cobre a maioria dos casos)
-  // adicionar listener global para tecla Esc (exemplo: mostrar controles)
-  const onKey = e => {
-    if (e.key === 'Escape') {
+  const onKey = (e) => {
+    if (e.key === "Escape") {
       showControls.value = true
       clearHideTimer()
+    } else if (e.code === "Space") {
+      e.preventDefault()
+      if (isPaused.value) playVideo()
+      else pauseVideo()
+      resetHideTimer()
     } else {
-      // qualquer tecla mostra controles
       resetHideTimer()
     }
   }
-  window.addEventListener('keydown', onKey)
+  window.addEventListener("keydown", onKey)
 
   onBeforeUnmount(() => {
-    window.removeEventListener('keydown', onKey)
+    window.removeEventListener("keydown", onKey)
     clearHideTimer()
   })
 })
@@ -184,11 +154,37 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearHideTimer()
 })
-
-/* sincroniza videoAtual.url caso os dados mudem (ex.: refresh) */
-watch(videoAtual, (v) => {
-  if (videoPlayer.value && videoPlayer.value.src !== v.url) {
-    // deixa como está; a função mudarResolucao já faz a troca quando clicado
-  }
-})
 </script>
+
+<style scoped>
+.video-player-wrapper {
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: none;
+}
+h1 { margin: 18px 0; font-size: 1.8rem; }
+.video-player { width: 100%; max-width: 1200px; background: black; }
+.controles {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.75);
+  padding: 12px 18px;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s, visibility .25s;
+}
+.controles.visble { opacity: 1; visibility: visible; }
+.btn-primary { background: #e50914; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+.btn-ghost { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.25); padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+.btn-exit { background: #333; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+.erro { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: white; }
+</style>
