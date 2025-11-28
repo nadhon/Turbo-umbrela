@@ -31,6 +31,8 @@
           v-for="filme in filmesPorCategoria(cat)"
           :key="filme.id"
           class="filme-card"
+          @mouseenter="startPreview(filme)"
+          @mouseleave="stopPreview(filme)"
           @click="assistirFilme(filme)"
         >
           <img :src="filme.img" />
@@ -49,12 +51,12 @@ const router = useRouter()
 const filmesAdmin = JSON.parse(localStorage.getItem("filmes")) || []
 
 const filmesFixos = [
-  { id: 1, title: "Homem de Aço", description: "Novo lançamento", img: "https://upload.wikimedia.org/wikipedia/pt/thumb/3/3b/Man_of_Steel%28filme%29.jpg/250px-Man_of_Steel%28filme%29.jpg", categoria: "Ação", novidade: true, url: "/videos/manofsteel.mp4", url360: "/videos/manofsteel-360.mp4" },
-  { id: 2, title: "Duna Parte 2", description: "Estreia exclusiva", img: "https://m.media-amazon.com/images/M/MV5BNzk5MTE4YTUtNGU2My00MTYxLWE5NGItODk4YWFkOWYyMjA5XkEyXkFqcGc@._V1_.jpg", categoria: "Ficção", novidade: true, url: "/videos/duna2.mp4", url720: "/videos/duna2-720.mp4" },
-  { id: 3, title: "Godzilla x Kong", description: "Batalha épica", img: "https://upload.wikimedia.org/wikipedia/pt/5/5e/Godzilla_x_Kong_-_The_New_Empire.jpg", categoria: "Ação", novidade: true, url: "/videos/godzillakong.mp4" },
+  { id: 1, title: "Homem de Aço", description: "Novo lançamento", img: "https://upload.wikimedia.org/wikipedia/pt/thumb/3/3b/Man_of_Steel%28filme%29.jpg/250px-Man_of_Steel%28filme%29.jpg", categoria: "Ação", novidade: true, videoURL: "/videos/manofsteel.mp4", url360: "/videos/manofsteel-360.mp4" },
+  { id: 2, title: "Duna Parte 2", description: "Estreia exclusiva", img: "https://m.media-amazon.com/images/M/MV5BNzk5MTE4YTUtNGU2My00MTYxLWE5NGItODk4YWFkOWYyMjA5XkEyXkFqcGc@._V1_.jpg", categoria: "Ficção", novidade: true, videoURL: "/videos/duna2.mp4", url720: "/videos/duna2-720.mp4" },
+  { id: 3, title: "Godzilla x Kong", description: "Batalha épica", img: "https://upload.wikimedia.org/wikipedia/pt/5/5e/Godzilla_x_Kong_-_The_New_Empire.jpg", categoria: "Ação", novidade: true, videoURL: "public/videos/Godzilla-vs-Kong-Trailer-.mp4" },
 
-  { id: 4, title: "Vingadores", categoria: "Ação", img: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/9b/Avengers_Endgame.jpg/250px-Avengers_Endgame.jpg", novidade: false, url: "/videos/vingadores.mp4" },
-  { id: 5, title: "Batman", categoria: "Ação", img: "https://m.media-amazon.com/images/S/pv-target-images/f9a8389e22a1b2a859d4b58a501964839f8c253f61b2c85b00b7f75954e05e90.jpg", novidade: false, url: "/videos/batman.mp4" },
+  { id: 4, title: "Vingadores", categoria: "Ação", img: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/9b/Avengers_Endgame.jpg/250px-Avengers_Endgame.jpg", novidade: false, videoURL: "/videos/vingadores.mp4" },
+  { id: 5, title: "Batman", categoria: "Ação", img: "https://m.media-amazon.com/images/S/pv-target-images/f9a8389e22a1b2a859d4b58a501964839f8c253f61b2c85b00b7f75954e05e90.jpg", novidade: false, videoURL: "/videos/batman.mp4" },
   { id: 6, title: "John Wick", categoria: "Ação", img: "https://upload.wikimedia.org/wikipedia/pt/1/13/John_wick_ver3.jpg", novidade: false, url: "/videos/johnwick.mp4" },
   { id: 7, title: "Gladiador", categoria: "Ação", img: "https://images.justwatch.com/poster/322099104/s718/gladiator-2.jpg", novidade: false, url: "/videos/gladiador.mp4" },
   { id: 8, title: "Mad Max", categoria: "Ação", img: "https://m.media-amazon.com/images/I/91ZaNnJP2uL._AC_UF894,1000_QL80_.jpg", novidade: false, url: "/videos/madmax.mp4" },
@@ -125,109 +127,3 @@ function assistirFilme(filme) {
   router.push("/player")
 }
 </script>
-
-<style scoped>
-.home {
-  background: #000;
-  color: white;
-  min-height: 100vh;
-}
-
-.banner {
-  height: 80vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.banner-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  filter: brightness(0.7);
-}
-
-.banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.9)
-  );
-}
-
-.banner-info {
-  position: absolute;
-  bottom: 80px;
-  left: 50px;
-  max-width: 500px;
-  z-index: 2;
-}
-
-.banner-info h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
-
-.banner-info p {
-  font-size: 1.1rem;
-  line-height: 1.4;
-  margin-bottom: 15px;
-}
-
-.banner-info button {
-  padding: 10px 25px;
-  background: #e50914;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.banner-info button:hover {
-  background: #b00610;
-}
-
-.categoria {
-  padding: 20px;
-}
-
-.novidades {
-  background: #111;
-  border-top: 2px solid #e50914;
-}
-
-.carrossel {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
-
-.filme-card {
-  min-width: 180px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.filme-card:hover {
-  transform: scale(1.05);
-}
-
-.filme-card img {
-  width: 180px;
-  height: 260px;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-.filme-card p {
-  text-align: center;
-  margin-top: 5px;
-  font-size: 0.9rem;
-}
-</style>

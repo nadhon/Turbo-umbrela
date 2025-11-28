@@ -1,14 +1,8 @@
 /* ---------- BASE GERAL ---------- */
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #0d1117, #141b22, #1c2530);
-  background-attachment: fixed;
-  background-image: url(src/views/img/Background.png);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
+  background: #000;
+  color: white;
   min-height: 100vh;
-  margin: 0;
 }
 
 /* ---------- CABEÇALHO ---------- */
@@ -411,48 +405,47 @@ main {
 
 /* ---------- HOME E BANNER ---------- */
 .banner {
+ height: 80vh;
   position: relative;
-  width: 100%;
-  height: 400px;
-  margin-bottom: 40px;
-  border-radius: 12px;
   overflow: hidden;
-  background-color: #111;
 }
 
 .banner-bg {
-  width: 100%;
+   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.5);
+  object-position: top center;
+  filter: brightness(0.7);
 }
 
 .banner-info {
   position: absolute;
-  bottom: 20px;
-  left: 30px;
-  color: #fff;
+  bottom: 80px;
+  left: 50px;
+  max-width: 500px;
+  z-index: 2;
 }
 
 .banner-info h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 10px;
 }
 
 .banner-info p {
   font-size: 1.1rem;
-  max-width: 600px;
+  line-height: 1.4;
   margin-bottom: 15px;
 }
 
-.banner-buttons button {
-  margin-right: 10px;
-  padding: 10px 20px;
+.banner-info button {
+  padding: 10px 25px;
+  background: #e50914;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 
 .banner-buttons .assistir {
@@ -471,6 +464,16 @@ main {
 
 .banner-buttons .favoritar:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+.banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.9)
+  );
 }
 
 /* ---------- CARROSSEL DE FILMES ---------- */
@@ -554,9 +557,13 @@ main {
   color: #fff;
 }
 
+
 .video-player-container video {
+  position: fixed;
+  inset: 0;
   width: 100%;
-  border-radius: 8px;
+  height: 100vh;
+ 
   margin-bottom: 15px;
 }
 
@@ -735,15 +742,14 @@ main {
 
 /* ---------- VIDEO PLAYER WRAPPER ---------- */
 .video-player-wrapper {
-  position: relative;
-  max-width: 900px;
-  margin: 60px auto;
-  background-color: #000;
-  border-radius: 12px;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  display: block;
+  background: black;
+  z-index: 1000;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 120, 255, 0.7);
-  color: #fff;
-  font-family: 'Arial, sans-serif';
 }
 
 .video-player-wrapper h1 {
@@ -757,10 +763,15 @@ main {
 }
 
 .video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  display: block;
-  background-color: #000;
+  height: 100%;
+  object-fit: cover;
+  background: black;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .resolucao {
@@ -789,12 +800,16 @@ main {
 
 .controles {
   position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  bottom: 18px;
   display: flex;
-  gap: 10px;
-  z-index: 5;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  z-index: 1010;
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }
 
 .controles button {
