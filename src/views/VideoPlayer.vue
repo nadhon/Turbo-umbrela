@@ -316,8 +316,8 @@ onMounted(() => {
 
   // tenta autoplay mutado (são politicas de navegador)
   // definimos muted para true temporariamente para permitir autoplay silencioso
-  muted.value = true
-  volume.value = 0
+  muted.value = false
+  volume.value = 1
   nextTickTryPlay()
 
   //progresso resumido: tenta carregar posição salva
