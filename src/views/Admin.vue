@@ -1,5 +1,11 @@
 <template>
   <div class="admin-panel">
+    <header class="header">
+      <nav>
+
+        <button @click="sair">Sair</button>
+      </nav>
+    </header>
     <h1>Admin Panel</h1>
 
     <!-- Gerenciar Filmes -->
@@ -37,7 +43,6 @@
       <h2>Total: {{ usuarios.length }}</h2>
     </section>
 
-    <button @click="sair">Sair</button>
   </div>
 </template>
 

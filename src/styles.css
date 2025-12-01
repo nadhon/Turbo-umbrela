@@ -7,6 +7,22 @@ body {
 
 /* ---------- CABEÇALHO ---------- */
 header {
+   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0d1117;
+  border-bottom: 1px solid #222;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.navbar,
+.b-navbar{
   position: fixed;
   top: 0;
   left: 0;
@@ -21,6 +37,17 @@ header {
   padding: 15px 40px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
+.navbar-brand,
+.navbar .brand,
+.navbar img {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.navbar-brand img { height: 40px; width: auto; }
+
 
 nav {
   display: flex;
@@ -64,16 +91,16 @@ header nav {
 
 header nav button {
   background-color: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fdfdfd;
+  border: 1px solid rgba(252, 252, 252, 0.06);
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
 }
 
 header nav button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-color: rgba(30, 144, 255, 0.6);
+  background-color: rgba(255, 1, 1, 0.616);
+  border-color: rgba(247, 251, 255, 0.6);
 }
 
 .nav-list {
@@ -427,7 +454,7 @@ main {
 }
 
 .banner-info h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
@@ -438,8 +465,9 @@ main {
 }
 
 .banner-info button {
+  position: inherit;
   padding: 10px 25px;
-  background: #e50914;
+  background: #ff000d;
   border: none;
   border-radius: 5px;
   color: white;
@@ -449,12 +477,12 @@ main {
 }
 
 .banner-buttons .assistir {
-  background-color: #e50914;
+  background-color: #c5000a;
   color: #fff;
 }
 
 .banner-buttons .assistir:hover {
-  background-color: #b0060f;
+  background-color: #ff000d;
 }
 
 .banner-buttons .favoritar {
@@ -641,7 +669,7 @@ main {
   padding: 12px 20px;
   border-radius: 8px;
   border: none;
-  background-color: #1e90ff;
+  background-color: #4502ff;
   color: #fff;
   cursor: pointer;
   font-weight: bold;
@@ -682,7 +710,7 @@ main {
 
 .admin-panel ul li button {
   margin-left: auto;
-  background-color: #1e90ff;
+  background-color: #1467b9;
   border: none;
   padding: 5px 10px;
   color: #fff;
@@ -735,6 +763,9 @@ main {
   }
 
   .admin-panel ul li button {
+    position: absolute;
+    margin-left: 0%;
+    background-color: #006fdc;
     margin-left: 0;
     margin-top: 10px;
   }

@@ -1,30 +1,5 @@
 <template>
-  <div class="home">
-    <Navbar />
-    <section class="banner" v-if="bannerFilm">
-      <img :src="bannerFilm.img" class="banner-bg" />
-      <div class="banner-info">
-        <h1>{{ bannerFilm.title }}</h1>
-        <p>{{ bannerFilm.description }}</p>
-        <button @click="assistirFilme(bannerFilm)">▶ Assistir</button>
-      </div>
-    </section>
-
-    <section v-if="novidades.length" class="categoria novidades">
-      <h2>🔥 Novidades do ADM</h2>
-      <div class="carrossel">
-        <div
-          v-for="filme in novidades"
-          :key="filme.id"
-          class="filme-card"
-          @click="assistirFilme(filme)"
-        >
-          <img :src="filme.img" />
-          <p>{{ filme.title }}</p>
-        </div>
-      </div>
-    </section>
-
+  <div class="filmes">
     <section v-for="cat in categorias" :key="cat" class="categoria">
       <h2>{{ cat }}</h2>
       <div class="carrossel">
@@ -47,7 +22,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
-import Navbar from "./Navbar.vue"
 const router = useRouter()
 
 const filmesAdmin = JSON.parse(localStorage.getItem("filmes")) || []

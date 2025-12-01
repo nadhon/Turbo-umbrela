@@ -1,22 +1,74 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import Home from "./views/Home.vue"        // ajuste conforme o nome real
-import VideoPlayer from "./views/VideoPlayer.vue" // nome do seu arquivo
+import Login from "./views/Login.vue"
+import VideoPlayer from "./views/VideoPlayer.vue"
+import Cadastro from "./views/Cadastro.vue"
+import Navbar from "./views/Navbar.vue"
+import Planos from "./views/Planos.vue"
 
 const routes = [
   {
-    path: "/home",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/player",
-    name: "VideoPlayer",
-    component: VideoPlayer
-  },
-  {
     path: "/",
-    redirect: "/home"
+    redirect: "/login"
+  },
+  {
+    path: "/navbar",
+    name: "Navbar",
+    component: Navbar,
+    children: [
+      {
+        path: "home",
+        name: "Home",
+        component: () => import('./views/Home.vue')
+      },
+      {
+        path: "player",
+        name: "VideoPlayer",
+        component: VideoPlayer
+      },
+      {
+        path: "serie",
+        name: "Serie",
+        component: () => import("./views/Series.vue")
+      },
+    ]
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("./views/Admin.vue")
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    children: [
+      {
+      path: "/esqueci-senha",
+        name: "EsqueciSenhaCodigo",
+        component: () => import("./views/EsqueciSenhaCodigo.vue")
+      },
+      {
+        path: "/esquecisenhaemail",
+        name: "EsqueciSenhaEmail",
+        component: () => import("./views/EsqueciSenhaEmail.vue")
+      },
+      {
+        path: "/esquecisenharedefinir",
+        name: "EsqueciSenhaRedefinir",
+        component: () => import("./views/EsqueciSenhaRedefinir.vue")
+      },
+    ]
+  },
+  {
+    path: "/cadastro",
+    name: "Cadastro",
+    component: Cadastro
+  },
+  {
+    path: "/planos",
+    name: "Planos",
+    component: Planos
   }
 ]
 

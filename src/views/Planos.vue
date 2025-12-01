@@ -45,7 +45,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 function assinarPlano(plano){
     alert(`Você assinou o plano ${plano}!`)
-    router.push('/home')
+    router.push('/login')
 }
 
 </script>
