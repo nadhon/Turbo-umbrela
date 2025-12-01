@@ -4,8 +4,8 @@
       <img src="../views/img/logo02.png" alt="Logo" class="logo" />
 
       <router-link to="/home" class="nav-link">Home</router-link>
-      <router-link to="/series" class="nav-link">Séries</router-link>
-      <router-link to="/filmes" class="nav-link">Filmes</router-link>
+      <router-link to="/home" class="nav-link">Séries</router-link>
+      <router-link to="/home" class="nav-link">Filmes</router-link>
     </div>
 
     <div class="nav-center">
@@ -16,10 +16,10 @@
         class="search-input"
       />
     </div>
-
     <div class="nav-right">
       <button class="logout-btn" @click="sair">Sair</button>
     </div>
+
   </header>
 </template>
 <script setup>
@@ -90,10 +90,12 @@ function sair(){
 }
 
 .logout-btn {
+  position: relative;
+  align-self: start;
   background: transparent;
   border: 1px solid #666;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 18px 140px;
+  border-radius: 60px;
   color: #fff;
   cursor: pointer;
   transition: .3s;

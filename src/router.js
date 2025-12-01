@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router"
 import Login from "./views/Login.vue"
 import VideoPlayer from "./views/VideoPlayer.vue"
 import Cadastro from "./views/Cadastro.vue"
-import Navbar from "./views/Navbar.vue"
+import Home from "./views/Home.vue"
 import Planos from "./views/Planos.vue"
 
 const routes = [
@@ -12,27 +12,16 @@ const routes = [
     redirect: "/login"
   },
   {
-    path: "/navbar",
-    name: "Navbar",
-    component: Navbar,
-    children: [
-      {
-        path: "home",
-        name: "Home",
-        component: () => import('./views/Home.vue')
-      },
-      {
-        path: "player",
-        name: "VideoPlayer",
-        component: VideoPlayer
-      },
-      {
-        path: "serie",
-        name: "Serie",
-        component: () => import("./views/Series.vue")
-      },
-    ]
+    path: "/home",
+    name: "Home",
+    component: Home
   },
+  {
+    path: "/player",
+    name: "VideoPlayer",
+    component: VideoPlayer
+  },
+  
   {
     path: "/admin",
     name: "Admin",
@@ -44,17 +33,17 @@ const routes = [
     component: Login,
     children: [
       {
-      path: "/esqueci-senha",
+        path: "esqueci-senha",
         name: "EsqueciSenhaCodigo",
         component: () => import("./views/EsqueciSenhaCodigo.vue")
       },
       {
-        path: "/esquecisenhaemail",
+        path: "esquecisenhaemail",
         name: "EsqueciSenhaEmail",
         component: () => import("./views/EsqueciSenhaEmail.vue")
       },
       {
-        path: "/esquecisenharedefinir",
+        path: "esquecisenharedefinir",
         name: "EsqueciSenhaRedefinir",
         component: () => import("./views/EsqueciSenhaRedefinir.vue")
       },

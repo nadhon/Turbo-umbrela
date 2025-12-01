@@ -2,7 +2,6 @@
   <div class="admin-panel">
     <header class="header">
       <nav>
-
         <button @click="sair">Sair</button>
       </nav>
     </header>

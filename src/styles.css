@@ -132,7 +132,15 @@ header nav button:hover {
     justify-self: center;
   }
 }
-
+.nav-right logout-btn{
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid #666;
+  padding: 9px 14px;
+  border-radius: 6px;
+  position: inherit;
+}
 /* ---------- MENU MOBILE ---------- */
 .mobile-menu {
   display: none;
